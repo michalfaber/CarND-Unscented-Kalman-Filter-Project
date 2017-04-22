@@ -74,6 +74,7 @@ public:
   ///* the current NIS for laser
   double NIS_laser_;
 
+
   /**
    * Constructor
    */
@@ -108,6 +109,61 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+private:
+  MatrixXd Xsig;
+
+  VectorXd X_aug;
+
+  MatrixXd P_aug;
+
+  MatrixXd Xsig_aug;
+
+  int n_z_radar;
+
+  MatrixXd Zsig_radar;
+
+  VectorXd Z_pred_radar;
+
+  MatrixXd S_radar;
+
+  MatrixXd R_radar;
+
+  MatrixXd Tc_radar;
+
+  int n_z_laser;
+
+  MatrixXd Zsig_laser;
+
+  VectorXd Z_pred_laser;
+
+  MatrixXd S_laser;
+
+  MatrixXd R_laser;
+
+  MatrixXd Tc_laser;
+
+  void GenerateSigmaPoints();
+
+  void AugmentedSigmaPoints();
+
+  void SigmaPointPrediction(double delta_t);
+
+  void PredictMeanAndCovariance();
+
+  void PredictRadarMeasurement();
+
+  void UpdateRadarState(MeasurementPackage meas_package);
+
+  void PredictLidarMeasurement();
+
+  void UpdateLidarState(MeasurementPackage meas_package);
+
+  double SNormalizeAngle(double phi);
+
+  void PrintMatrix(MatrixXd *m);
+
+  void PrintVec(VectorXd *v);
 };
 
 #endif /* UKF_H */
